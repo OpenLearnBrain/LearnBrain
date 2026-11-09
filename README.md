@@ -34,7 +34,7 @@ Herkömmliche Chatbots und RAG-Systeme fluten das Kontextfenster mit Hunderten S
 
 Man kann sich das Gedächtnis von LearnBrain wie einen gut organisierten Schreibtisch eines erfolgreichen Studenten vorstellen:
 
-1. **L3 (Auf dem Schreibtisch – Immer im Blick):** Dein Studienausweis, dein aktuelles Semester und dein Lernziel. Es nimmt wenig Platz weg, aber die KI weiß zu jeder Sekunde, wer du bist und wo du im Studium stehst.
+1. **L3 (Auf dem Schreibtisch – Immer im Blick):** Das aktuelle Semester und deine Lernziele. Es nimmt wenig Platz weg, aber die KI weiß zu jeder Sekunde, wer du bist und wo du im Studium stehst.
 2. **L2 (In der Schreibtischschublade – Griffbereit bei Bedarf):** Die Semestermappe mit dem Stundenplan und den Zusammenfassungen. Wenn du planst oder Fächer vergleichst, wird sie kurz herausgeholt.
 3. **L1 (Im Archiv-Regal – Gezielt nachgeschlagen):** Die riesigen Ordner mit tausenden Seiten Skripten, Formeln und Aufgaben. Anstatt alle Ordner auf den Schreibtisch zu kippen, holt die KI nur die eine benötigte Karteikarte mit der gesuchten Formel heraus.
 
