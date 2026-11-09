@@ -265,7 +265,6 @@ Das Projekt befindet sich in der aktiven **Architektur- und Prototypenphase**:
 
 - [x] Konzeption der 3-Ebenen-Gedächtnisarchitektur (L1–L3)
 - [x] Repository-Setup & OpenLearnBrain-Organisation
-- [x] Privater Prototyp: Aufbau je Fach, Lernziele, Aufgabenbank, Lernstand mit Wiederholungsplan, Prüfskript, Git-Hook, Übungsskript
 - [ ] Installer
 - [ ] Trennung von System und Nutzerdaten
 - [ ] Updates und Migrationen
