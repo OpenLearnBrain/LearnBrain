@@ -2,9 +2,7 @@
 
 > Ein lokaler, datenschutzkonformer **Learning Agent Harness** mit hierarchischem Gedächtnis – entwickelt für Studierende, vollständig quelloffen (FOSS) und ohne versteckte Abos.
 
----
-
-## 🎯 1. Das Ziel & die Vision
+## Das Ziel & die Vision
 
 Mit **LearnBrain** entsteht das Herzstück der **OpenLearnBrain**-Organisation: ein intelligenter, geführter KI-Lernharness, der Studierende interaktiv durch komplexe Vorlesungsinhalte begleitet, anstatt nur fertige Lösungen vorzukauen.
 
@@ -14,9 +12,7 @@ Mit **LearnBrain** entsteht das Herzstück der **OpenLearnBrain**-Organisation: 
 * **Volle Datenhoheit & Privatsphäre:** Universitätsunterlagen, Skripte und Notizen bleiben 100 % lokal auf dem Rechner des Studierenden.
 * **Harness- & Tool-Agnostisch:** Der Nutzer entscheidet frei, mit welchem KI-Tool gearbeitet wird (Antigravity, Claude Code, OpenAI Codex oder lokale Open-Weights-Modelle via Ollama).
 
----
-
-## 🧠 2. Das 3-Stufen-Gedächtnis (L1 bis L3)
+## Das 3-Stufen-Gedächtnis (L1 bis L3)
 
 Herkömmliche Chatbots und RAG-Systeme fluten das Kontextfenster mit Hunderten Seiten Skripten. LearnBrain nutzt stattdessen eine dreistufige, tokensparende Gedächtnishierarchie.
 
@@ -51,20 +47,18 @@ flowchart TD
 | **L2** | **Semester** | Modulübersichten, Querverbindungen, Klausurphasen. | *Die Semestermappe* | **On-Demand** bei Semesterthemen (`README.md`), ca. **200 Tokens**. |
 | **L1** | **Atomar / Fach** | Konkrete Definitionen, Theoreme, Formeln, Code, Übungen. | *Die Karteikarte aus dem Regal* | **Selektive Vektorsuche** via Qdrant, ca. **50–150 Tokens** pro Treffer. |
 
----
-
-## 🔄 3. Wie das Gesamtsystem funktioniert (Der Ablauf im Alltag)
+## Wie das Gesamtsystem funktioniert (Der Ablauf im Alltag)
 
 Das folgende Schaubild zeigt, wie die einzelnen Module zusammenarbeiten, wenn ein Student dem System eine Frage stellt:
 
 ```mermaid
 sequenceDiagram
     autonumber
-    actor Student as 🎓 Student
-    participant KI as 🤖 KI-Agent (z.B. Antigravity / Claude / Ollama)
-    participant Harness as 🛡️ LearnBrain Harness (Regeln & Skills)
-    participant Qdrant as ⚡ Qdrant Gedächtnis (L1-L3)
-    participant Library as 📚 Lokale Skripte & Notizen
+    actor Student as Student
+    participant KI as KI-Agent (z.B. Antigravity / Claude / Ollama)
+    participant Harness as LearnBrain Harness (Regeln & Skills)
+    participant Qdrant as Qdrant Gedächtnis (L1-L3)
+    participant Library as Lokale Skripte & Notizen
 
     Student->>KI: "Erkläre mir den Dijkstra-Algorithmus aus Info 1!"
     KI->>Harness: Prüfe Instruktionen & L3-Profil
@@ -75,16 +69,14 @@ sequenceDiagram
     KI-->>Student: "Dijkstra nutzt Kanten-Gewichte. Erinnerst du dich an die Breitensuche?<br/>Welche Datenstruktur fehlt uns hier noch für die Priorisierung?"
 ```
 
----
-
-## 🧩 4. Modul-Architektur von LearnBrain
+## Modul-Architektur von LearnBrain
 
 Für Nicht-Techniker lässt sich die Architektur in vier verständliche Bausteine unterteilen:
 
 ```mermaid
 flowchart LR
     subgraph Frontend ["1. Der Student & sein Interface"]
-        User["🎓 Student"] <--> UI["Beliebiges KI-Tool<br/>(Antigravity / Claude Code / Codex / Terminal)"]
+        User["Student"] <--> UI["Beliebiges KI-Tool<br/>(Antigravity / Claude Code / Codex / Terminal)"]
     end
 
     subgraph Core ["2. LearnBrain Harness (Das Gehirn)"]
@@ -95,11 +87,11 @@ flowchart LR
 
     subgraph Storage ["3. Lokaler Gedächtnisspeicher"]
         Harness <--> Tool["Gedächtnis-Tool<br/>(memory_tool.py)"]
-        Tool <--> Qdrant[("⚡ Qdrant Vektor-DB<br/>(Offline & Verschlüsselt)")]
+        Tool <--> Qdrant[("Qdrant Vektor-DB<br/>(Offline & Verschlüsselt)")]
     end
 
     subgraph Files ["4. Deine Unterlagen"]
-        Tool <--> Docs["📚 Eigene Skripte, PDFs & Notizen<br/>(Bleiben 100% auf deinem Rechner)"]
+        Tool <--> Docs["Eigene Skripte, PDFs & Notizen<br/>(Bleiben 100% auf deinem Rechner)"]
     end
 ```
 
@@ -109,9 +101,7 @@ flowchart LR
 3. **Das Gedächtnis (Der Filter):** Qdrant sorgt dafür, dass aus tausenden Seiten Vorlesungsunterlagen in Millisekunden genau die richtige Information herausgefiltert wird.
 4. **Deine Unterlagen (Die Datenhoheit):** Alle PDFs, Markdown-Dateien und Vorlesungsfolien bleiben auf deinem Laptop. Es gibt keinen Cloud-Upload.
 
----
-
-## ⚡ 5. Tool-Entscheidung: Qdrant (lokal)
+## Tool-Entscheidung: Qdrant (lokal)
 
 Als Vektorspeicher und Retrieval-Engine setzt LearnBrain auf **lokales Qdrant** (via Docker oder dateibasiertem Python-Client):
 
@@ -122,9 +112,7 @@ Als Vektorspeicher und Retrieval-Engine setzt LearnBrain auf **lokales Qdrant** 
   * *Letta (MemGPT):* Verursacht ein „Harness-in-a-Harness“-Problem, da Antigravity/Claude Code bereits als Agent-Harness fungieren.
   * *LightRAG:* Lokales Indizieren ganzer Vorlesungsskripte per Graph-Extraktion ist auf lokaler Hardware zu rechenintensiv.
 
----
-
-## 📁 6. Struktur des Harness-Workspace
+## Struktur des Harness-Workspace
 
 ```text
 LearnBrain/
@@ -144,18 +132,14 @@ LearnBrain/
         └── Fach_Y/             # [L1] Skripte, Notizen, Übungen
 ```
 
----
-
-## 🚀 7. Die Kernvorteile auf einen Blick
+## Die Kernvorteile auf einen Blick
 
 1. **Tokensparend:** Das System lädt niemals ganze Skripte, sondern nur punktuell 2–3 Absätze (oft unter 200 Tokens Gesamtoverhead).
 2. **Didaktisch geführt:** Der Harness zwingt die KI über Skills dazu, dich mit gezielten Fragen zur Lösung zu führen, statt Hausaufgaben für dich zu erledigen.
 3. **100 % lokal & privat:** Alle Skripte, Notizen und Embeddings laufen offline (z. B. über Ollama + Qdrant) auf deinem Rechner.
 4. **Harness-Agnostisch:** Funktioniert nahtlos mit Antigravity, Claude Code, Cursor oder Codex.
 
----
-
-## 🛠️ 8. Status & Roadmap
+## Status & Roadmap
 
 Das Projekt befindet sich in der aktiven **Architektur- und Prototypenphase**:
 
