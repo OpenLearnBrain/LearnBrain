@@ -2,11 +2,9 @@
 
 > Ein lokaler, quelloffener **Learning Agent Harness** mit hierarchischem Gedächtnis – für Studierende und alle, die mit ihren eigenen Unterlagen lernen wollen, vollständig FOSS und ohne versteckte Abos.
 
-> **Status:** Architektur- und Prototypenphase. Es gibt noch keine installierbare Version, siehe Abschnitt 13.
+> **Status:** Architektur- und Prototypenphase. Es gibt noch keine installierbare Version, siehe [Status & Roadmap](#status--roadmap).
 
----
-
-## 🎯 1. Das Ziel & die Vision
+## Das Ziel & die Vision
 
 Mit **LearnBrain** entsteht das Herzstück der **OpenLearnBrain**-Organisation: ein intelligenter, geführter KI-Lernharness, der Studierende interaktiv durch komplexe Vorlesungsinhalte begleitet, anstatt nur fertige Lösungen vorzukauen.
 
@@ -24,9 +22,7 @@ Erprobt wird es bisher mit Informatik und Mathematik, andere Fächer werden noch
 * **Volle Datenhoheit:** Unterlagen, Skripte und Notizen liegen lokal auf deinem Rechner, und du entscheidest, welches Modell was zu sehen bekommt.
 * **Harness- & Tool-Agnostisch:** Du entscheidest frei, mit welchem KI-Tool du arbeitest (z. B. Claude Code, OpenAI Codex, Gemini, Antigravity oder lokale Open-Weights-Modelle via Ollama).
 
----
-
-## 🧠 2. Das 3-Stufen-Gedächtnis (L1 bis L3)
+## Das 3-Stufen-Gedächtnis (L1 bis L3)
 
 Herkömmliche Chatbots und RAG-Systeme fluten das Kontextfenster mit Hunderten Seiten Skripten. LearnBrain nutzt stattdessen eine dreistufige, tokensparende Gedächtnishierarchie.
 
@@ -61,9 +57,7 @@ flowchart TD
 | **L2** | **Semester** | Modulübersichten, Querverbindungen, Klausurphasen. | *Die Semestermappe* | **On-Demand** bei Semesterthemen (`state/`). |
 | **L1** | **Atomar / Fach** | Konkrete Definitionen, Theoreme, Formeln, Code, Übungen. | *Die Karteikarte aus dem Regal* | **Gezielt** in `faecher/<fach>/`: erst der Index, dann der passende Abschnitt. |
 
----
-
-## 🔄 3. Wie das Gesamtsystem funktioniert (Der Ablauf im Alltag)
+## Wie das Gesamtsystem funktioniert (Der Ablauf im Alltag)
 
 ### Von der Installation zum Lernen
 
@@ -81,11 +75,11 @@ Das folgende Schaubild zeigt, wie die einzelnen Module zusammenarbeiten, wenn ei
 ```mermaid
 sequenceDiagram
     autonumber
-    actor Student as 🎓 Student
-    participant KI as 🤖 KI-Agent (z.B. Claude Code / Codex / Ollama)
-    participant Harness as 🛡️ LearnBrain Harness (Regeln & Skills)
-    participant Wissen as 📚 Wissen & Aufgaben (L1)
-    participant Lernstand as 📈 Lernstand
+    actor Student as Student
+    participant KI as KI-Agent (z.B. Claude Code / Codex / Ollama)
+    participant Harness as LearnBrain Harness (Regeln & Skills)
+    participant Wissen as Wissen & Aufgaben (L1)
+    participant Lernstand as Lernstand
 
     Student->>KI: "Erkläre mir den Dijkstra-Algorithmus aus Info 1!"
     KI->>Harness: Prüfe Instruktionen & L3-Profil
@@ -99,16 +93,14 @@ sequenceDiagram
     Note over Harness,Lernstand: Hooks und Prüfskript kontrollieren das Format
 ```
 
----
-
-## 🧩 4. Modul-Architektur von LearnBrain
+## Modul-Architektur von LearnBrain
 
 Für Nicht-Techniker lässt sich die Architektur in vier verständliche Bausteine unterteilen:
 
 ```mermaid
 flowchart LR
     subgraph Frontend ["1. Der Student & sein Interface"]
-        User["🎓 Student"] <--> UI["Beliebiges KI-Tool<br/>(Claude Code / Codex / Gemini / Antigravity / Terminal)"]
+        User["Student"] <--> UI["Beliebiges KI-Tool<br/>(Claude Code / Codex / Gemini / Antigravity / Terminal)"]
     end
 
     subgraph Core ["2. LearnBrain Harness (Das Gehirn)"]
@@ -120,11 +112,11 @@ flowchart LR
 
     subgraph Storage ["3. Lokales Gedächtnis"]
         Harness <--> Tool["Suche<br/>(Index und Abschnitte)"]
-        Tool -.-> Qdrant[("⚡ Qdrant-Plugin<br/>(optional)")]
+        Tool -.-> Qdrant[("Qdrant-Plugin<br/>(optional)")]
     end
 
     subgraph Files ["4. Deine Unterlagen"]
-        Tool <--> Docs["📚 Wissen und Aufgaben aus deinen Skripten, PDFs & Notizen<br/>(liegen auf deinem Rechner)"]
+        Tool <--> Docs["Wissen und Aufgaben aus deinen Skripten, PDFs & Notizen<br/>(liegen auf deinem Rechner)"]
     end
 ```
 
@@ -134,9 +126,7 @@ flowchart LR
 3. **Das Gedächtnis (Der Filter):** Zuerst der Index, dann der passende Abschnitt mit Datei und Seite. Mit dem Qdrant-Plugin kommt semantische Suche dazu.
 4. **Deine Unterlagen (Die Datenhoheit):** Alle PDFs, Markdown-Dateien und Vorlesungsfolien liegen auf deinem Rechner. Was dein Agent davon liest, entscheidest du.
 
----
-
-## ⚡ 5. Tool-Entscheidung: Stichwortsuche als Standard, Qdrant als Plugin
+## Tool-Entscheidung: Stichwortsuche als Standard, Qdrant als Plugin
 
 Standard ist eine **Stichwortsuche** über die Abschnitte in `wissen/`. Sie braucht keine Datenbank und behält die Seitenangaben.
 
@@ -149,9 +139,7 @@ Standard ist eine **Stichwortsuche** über die Abschnitte in `wissen/`. Sie brau
   * *Letta (MemGPT):* Bringt eine eigene Agenten-Laufzeit mit, die neben Claude Code und Co. nicht gebraucht wird.
   * *LightRAG:* Lokales Indizieren ganzer Vorlesungsskripte per Graph-Extraktion ist auf lokaler Hardware zu rechenintensiv.
 
----
-
-## 📁 6. Struktur nach der Installation
+## Struktur nach der Installation
 
 ```text
 mein-learnbrain/
@@ -170,9 +158,7 @@ mein-learnbrain/
         └── lernstand/            # Was du kannst, was fällig ist, deine Fehler
 ```
 
----
-
-## 📏 7. Feste Regeln
+## Feste Regeln
 
 Damit jedes Werkzeug die Dateien gleich lesen kann, ist der Rahmen fest. Freier Text darf sich unterscheiden, Aufbau und Felder nicht.
 
@@ -193,9 +179,7 @@ Durchgesetzt wird das technisch:
 | **Prüfskript** | Findet Verstöße gegen Aufbau, Formate und IDs und rechnet den Lernstand nach |
 | **Git-Hook** | Letzte Prüfung vor jedem Commit |
 
----
-
-## 🎓 8. Lernen mit LearnBrain
+## Lernen mit LearnBrain
 
 - **Wissen aus deinen Unterlagen:** Aus Folien und Skripten entstehen Markdown-Dateien mit Datei- und Seitenangabe.
 - **Lernziele mit festen IDs:** Wissen, Aufgaben und Lernstand verweisen auf dieselben Lernziele.
@@ -209,9 +193,7 @@ Die Skills werden dort installiert, wo der jeweilige Harness sie erwartet:
 - `socratic-tutor`: Lerngespräch zum Verstehen, mit gezielten Rückfragen statt Vorsagen
 - `exam-simulation`: Realistische Probeklausuren erzeugen und auswerten, die Ergebnisse fließen in den Lernstand
 
----
-
-## ⌨️ 9. Geplante Befehle
+## Geplante Befehle
 
 Die Namen können sich noch ändern. Die Skripte brauchen nur Node.
 
@@ -226,9 +208,7 @@ Die Namen können sich noch ändern. Die Skripte brauchen nur Node.
 | `learnbrain pruefen` | Regeln prüfen und die Form reparieren |
 | `learnbrain update` | System aktualisieren |
 
----
-
-## 🔐 10. Modelle und Daten
+## Modelle und Daten
 
 - Welche Modelle du nutzt, entscheidest du. LearnBrain gibt nur Empfehlungen.
 - LearnBrain selbst kostet nichts. Kosten entstehen nur bei dem KI-Anbieter, den du wählst.
@@ -236,9 +216,7 @@ Die Namen können sich noch ändern. Die Skripte brauchen nur Node.
 - LearnBrain stellt nur das Gerüst bereit und liefert keine Inhalte mit. Welche Daten du verwendest und wohin du sie schickst, entscheidest und verantwortest du selbst.
 - GitHub ist freiwillig. Wenn du es nutzt, empfehlen wir ein privates Repo, weil darin deine Folien und Klausuren liegen.
 
----
-
-## ♻️ 11. Updates
+## Updates
 
 1. Das System liegt in `.learnbrain/`. Ein Update ersetzt nur das und die daraus erzeugten Dateien für die einzelnen Harnesse.
 2. Deine Daten tragen eine Formatversion.
@@ -247,9 +225,7 @@ Die Namen können sich noch ändern. Die Skripte brauchen nur Node.
 5. Neue Prüfregeln laufen eine Version lang nur als Hinweis, damit sie niemanden blockieren.
 6. Geladen wird aus öffentlichen Releases, dafür braucht niemand ein GitHub-Konto.
 
----
-
-## 🚀 12. Die Kernvorteile auf einen Blick
+## Die Kernvorteile auf einen Blick
 
 1. **Tokensparend:** Der Agent lädt nicht ganze Skripte, sondern gezielt den Abschnitt, den er braucht.
 2. **Didaktisch geführt:** Die Skills führen die KI dazu, dich mit gezielten Fragen zur Lösung zu bringen, statt Hausaufgaben für dich zu erledigen.
@@ -257,9 +233,7 @@ Die Namen können sich noch ändern. Die Skripte brauchen nur Node.
 4. **Deine Daten, deine Wahl:** Alles liegt lokal, und du entscheidest, welches Modell was zu sehen bekommt.
 5. **Harness-Agnostisch:** Gedacht für Claude Code, Codex, Gemini, Antigravity oder Cursor.
 
----
-
-## 🛠️ 13. Status & Roadmap
+## Status & Roadmap
 
 Das Projekt befindet sich in der aktiven **Architektur- und Prototypenphase**:
 
